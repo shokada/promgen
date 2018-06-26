@@ -1,26 +1,15 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>promgen.discovery.default &#8212; Promgen 0.11.dev documentation</title>
-    
+    <title>promgen.discovery.default &#8212; Promgen 0.28.dev documentation</title>
     <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../../../',
-        VERSION:     '0.11.dev',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
@@ -32,13 +21,14 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
-  </head>
-  <body role="document">
+  </head><body>
   
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
+          
+
           <div class="body" role="main">
             
   <h1>Source code for promgen.discovery.default</h1><div class="highlight"><pre>
@@ -50,17 +40,19 @@
 <span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="k">import</span> <span class="n">get_object_or_404</span>
 
 <span class="kn">from</span> <span class="nn">promgen</span> <span class="k">import</span> <span class="n">models</span>
-<span class="kn">from</span> <span class="nn">promgen.discovery</span> <span class="k">import</span> <span class="n">DiscoveryBase</span>
+<span class="kn">from</span> <span class="nn">promgen</span> <span class="k">import</span> <span class="n">discovery</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="DiscoveryPromgen"><a class="viewcode-back" href="../../../modules/discovery.html#promgen.discovery.default.DiscoveryPromgen">[docs]</a><span class="k">class</span> <span class="nc">DiscoveryPromgen</span><span class="p">(</span><span class="n">DiscoveryBase</span><span class="p">):</span>
+<div class="viewcode-block" id="DiscoveryPromgen"><a class="viewcode-back" href="../../../modules/discovery.html#promgen.discovery.default.DiscoveryPromgen">[docs]</a><span class="k">class</span> <span class="nc">DiscoveryPromgen</span><span class="p">(</span><span class="n">discovery</span><span class="o">.</span><span class="n">DiscoveryBase</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;Promgen local database discovery plugin</span>
 
 <span class="sd">    This is the default discovery plugin for farms and hosts stored locally in</span>
 <span class="sd">    promgen&#39;s database. They are queried directly from Django&#39;s ORM</span>
 <span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">remote</span> <span class="o">=</span> <span class="kc">False</span>
 
 <div class="viewcode-block" id="DiscoveryPromgen.fetch"><a class="viewcode-back" href="../../../modules/discovery.html#promgen.discovery.default.DiscoveryPromgen.fetch">[docs]</a>    <span class="k">def</span> <span class="nf">fetch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">farm_name</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Fetch list of hosts for a farm from the local database&#39;&#39;&#39;</span>
@@ -70,11 +62,12 @@
 
 <div class="viewcode-block" id="DiscoveryPromgen.farms"><a class="viewcode-back" href="../../../modules/discovery.html#promgen.discovery.default.DiscoveryPromgen.farms">[docs]</a>    <span class="k">def</span> <span class="nf">farms</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Fetch farms from local database&#39;&#39;&#39;</span>
-        <span class="k">for</span> <span class="n">farm</span> <span class="ow">in</span> <span class="n">models</span><span class="o">.</span><span class="n">Farm</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">FARM_DEFAULT</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">farm</span> <span class="ow">in</span> <span class="n">models</span><span class="o">.</span><span class="n">Farm</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="n">discovery</span><span class="o">.</span><span class="n">FARM_DEFAULT</span><span class="p">):</span>
             <span class="k">yield</span> <span class="n">farm</span><span class="o">.</span><span class="n">name</span></div></div>
 </pre></div>
 
           </div>
+          
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -97,24 +90,16 @@
 
 <h3>Navigation</h3>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../terms.html">Glossary</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../docker.html">Running Promgen using Docker</a></li>
-</ul>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../plugin/discovery.html">Writing Discovery Plugins</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../plugin/notification.html">Writing Notification Plugins</a></li>
-</ul>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../modules/discovery.html">Discovery Plugins</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../modules/models.html">Promgen Models</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../modules/notification.html">Notification Modules</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../modules/prometheus.html">Prometheus Interactions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../conf/index.html">Installing Promgen</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user/index.html">Using Promgen</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../plugin/index.html">Extending Promgen</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/index.html">Module Reference</a></li>
 </ul>
 
 
 <ul>
-  <li><a href="genindex.html">Index</a></li>
-  <li><a href="py-modindex.html">Module Index</a></li>
+  <li><a href="../../../genindex.html">Index</a></li>
+  <li><a href="../../../py-modindex.html">Module Index</a></li>
 </ul>
 
 <hr />
@@ -134,12 +119,14 @@
 </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../../../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -150,8 +137,8 @@
       &copy;2017, LINE.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.5</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
       
     </div>
 

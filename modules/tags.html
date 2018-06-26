@@ -1,0 +1,189 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Template Tags &#8212; Promgen 0.28.dev documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Promgen Models" href="models.html" />
+    <link rel="prev" title="Prometheus Interactions" href="prometheus.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="module-promgen.templatetags.promgen">
+<span id="template-tags"></span><h1>Template Tags<a class="headerlink" href="#module-promgen.templatetags.promgen" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="promgen.templatetags.promgen.diff_json">
+<code class="descclassname">promgen.templatetags.promgen.</code><code class="descname">diff_json</code><span class="sig-paren">(</span><em>a</em>, <em>b</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/promgen/templatetags/promgen.html#diff_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#promgen.templatetags.promgen.diff_json" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="promgen.templatetags.promgen.klass">
+<code class="descclassname">promgen.templatetags.promgen.</code><code class="descname">klass</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/promgen/templatetags/promgen.html#klass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#promgen.templatetags.promgen.klass" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="promgen.templatetags.promgen.pretty_json">
+<code class="descclassname">promgen.templatetags.promgen.</code><code class="descname">pretty_json</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/promgen/templatetags/promgen.html#pretty_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#promgen.templatetags.promgen.pretty_json" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="promgen.templatetags.promgen.qsfilter">
+<code class="descclassname">promgen.templatetags.promgen.</code><code class="descname">qsfilter</code><span class="sig-paren">(</span><em>request</em>, <em>k</em>, <em>v</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/promgen/templatetags/promgen.html#qsfilter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#promgen.templatetags.promgen.qsfilter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper to rewrite query string for URLs</p>
+<p>{% qsfilter request ‘foo’ ‘baz’ %}
+When passed the request object, it will take a querystring like
+?foo=bar&amp;donottouch=1
+and change it to
+?foo=baz&amp;donottouch=1</p>
+<p>Useful when working with filtering on a page that also uses pagination to
+avoid losing other query strings
+{% qsfilter request ‘page’ page_obj.previous_page_number %}</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="promgen.templatetags.promgen.rulemacro">
+<code class="descclassname">promgen.templatetags.promgen.</code><code class="descname">rulemacro</code><span class="sig-paren">(</span><em>value</em>, <em>rule</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/promgen/templatetags/promgen.html#rulemacro"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#promgen.templatetags.promgen.rulemacro" title="Permalink to this definition">¶</a></dt>
+<dd><p>Macro rule expansion</p>
+<p>Assuming a list of rules with children and parents, expand our macro to exclude child rules</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>foo{&lt;exclude&gt;} / bar{&lt;exclude&gt;} &gt; 5 # Parent Rule
+foo{project=&quot;A&quot;, &lt;exclude&gt;} / bar{project=&quot;A&quot;, &lt;exclude&gt;} &gt; 3 # Child Rule
+foo{project=&quot;B&quot;} / bar{project=&quot;B&quot;} &gt; 4 # Child Rule
+
+foo{project~=&quot;A|B&quot;} / bar{project~=&quot;A|B&quot;} &gt; 5
+foo{project=&quot;A&quot;, } / bar{project=&quot;A&quot;} &gt; 3
+foo{project=&quot;B&quot;} / bar{project=&quot;B&quot;} &gt; 4
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="promgen.templatetags.promgen.strftime">
+<code class="descclassname">promgen.templatetags.promgen.</code><code class="descname">strftime</code><span class="sig-paren">(</span><em>timestamp</em>, <em>fmt</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/promgen/templatetags/promgen.html#strftime"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#promgen.templatetags.promgen.strftime" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="promgen.templatetags.promgen.to_prom">
+<code class="descclassname">promgen.templatetags.promgen.</code><code class="descname">to_prom</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/promgen/templatetags/promgen.html#to_prom"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#promgen.templatetags.promgen.to_prom" title="Permalink to this definition">¶</a></dt>
+<dd><p>Render a Python dictionary using Prometheus’ dictonary format</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Promgen</a></h1>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=line&repo=promgen&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../conf/index.html">Installing Promgen</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/index.html">Using Promgen</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../plugin/index.html">Extending Promgen</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Module Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="discovery.html">Discovery Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notification.html">Notification Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="prometheus.html">Prometheus Interactions</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Template Tags</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models.html">Promgen Models</a></li>
+</ul>
+</li>
+</ul>
+
+
+<ul>
+  <li><a href="../genindex.html">Index</a></li>
+  <li><a href="../py-modindex.html">Module Index</a></li>
+</ul>
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="http://engineering.linecorp.com">LINE Engineering Blog</a></li>
+    
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Module Reference</a><ul>
+      <li>Previous: <a href="prometheus.html" title="previous chapter">Prometheus Interactions</a></li>
+      <li>Next: <a href="models.html" title="next chapter">Promgen Models</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, LINE.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
+      
+      |
+      <a href="../_sources/modules/tags.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

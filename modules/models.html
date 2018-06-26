@@ -1,88 +1,159 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Promgen Models &#8212; Promgen 0.11.dev documentation</title>
-    
+    <title>Promgen Models &#8212; Promgen 0.28.dev documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '0.11.dev',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Notification Modules" href="notification.html" />
-    <link rel="prev" title="Discovery Plugins" href="discovery.html" />
+    <link rel="prev" title="Template Tags" href="tags.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
-  </head>
-  <body role="document">
+  </head><body>
   
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
+          
+
           <div class="body" role="main">
             
   <div class="section" id="module-promgen.models">
 <span id="promgen-models"></span><h1>Promgen Models<a class="headerlink" href="#module-promgen.models" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="promgen.models.Audit">
-<em class="property">class </em><code class="descclassname">promgen.models.</code><code class="descname">Audit</code><span class="sig-paren">(</span><em>id</em>, <em>body</em>, <em>created</em>, <em>content_type</em>, <em>object_id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/promgen/models.html#Audit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#promgen.models.Audit" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">promgen.models.</code><code class="descname">Audit</code><span class="sig-paren">(</span><em>id</em>, <em>body</em>, <em>created</em>, <em>data</em>, <em>old</em>, <em>content_type</em>, <em>object_id</em>, <em>user</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/promgen/models.html#Audit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#promgen.models.Audit" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="exception">
+<dt id="promgen.models.Audit.DoesNotExist">
+<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#promgen.models.Audit.DoesNotExist" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="exception">
+<dt id="promgen.models.Audit.MultipleObjectsReturned">
+<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#promgen.models.Audit.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
 
 <dl class="class">
 <dt id="promgen.models.Exporter">
 <em class="property">class </em><code class="descclassname">promgen.models.</code><code class="descname">Exporter</code><span class="sig-paren">(</span><em>id</em>, <em>job</em>, <em>port</em>, <em>path</em>, <em>project</em>, <em>enabled</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/promgen/models.html#Exporter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#promgen.models.Exporter" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="exception">
+<dt id="promgen.models.Exporter.DoesNotExist">
+<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#promgen.models.Exporter.DoesNotExist" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="exception">
+<dt id="promgen.models.Exporter.MultipleObjectsReturned">
+<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#promgen.models.Exporter.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
 
 <dl class="class">
 <dt id="promgen.models.Farm">
 <em class="property">class </em><code class="descclassname">promgen.models.</code><code class="descname">Farm</code><span class="sig-paren">(</span><em>id</em>, <em>name</em>, <em>source</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/promgen/models.html#Farm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#promgen.models.Farm" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="exception">
+<dt id="promgen.models.Farm.DoesNotExist">
+<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#promgen.models.Farm.DoesNotExist" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="exception">
+<dt id="promgen.models.Farm.MultipleObjectsReturned">
+<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#promgen.models.Farm.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="promgen.models.Farm.driver">
+<code class="descname">driver</code><a class="headerlink" href="#promgen.models.Farm.driver" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return configured driver for Farm model instance</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="promgen.models.Farm.driver_set">
+<em class="property">classmethod </em><code class="descname">driver_set</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/promgen/models.html#Farm.driver_set"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#promgen.models.Farm.driver_set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the list of drivers for Farm model</p>
+</dd></dl>
+
+</dd></dl>
 
 <dl class="class">
 <dt id="promgen.models.Host">
 <em class="property">class </em><code class="descclassname">promgen.models.</code><code class="descname">Host</code><span class="sig-paren">(</span><em>id</em>, <em>name</em>, <em>farm</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/promgen/models.html#Host"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#promgen.models.Host" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="exception">
+<dt id="promgen.models.Host.DoesNotExist">
+<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#promgen.models.Host.DoesNotExist" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="exception">
+<dt id="promgen.models.Host.MultipleObjectsReturned">
+<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#promgen.models.Host.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
 
 <dl class="class">
 <dt id="promgen.models.Project">
-<em class="property">class </em><code class="descclassname">promgen.models.</code><code class="descname">Project</code><span class="sig-paren">(</span><em>id</em>, <em>name</em>, <em>service</em>, <em>farm</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/promgen/models.html#Project"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#promgen.models.Project" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">promgen.models.</code><code class="descname">Project</code><span class="sig-paren">(</span><em>id</em>, <em>name</em>, <em>service</em>, <em>farm</em>, <em>description</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/promgen/models.html#Project"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#promgen.models.Project" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="exception">
+<dt id="promgen.models.Project.DoesNotExist">
+<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#promgen.models.Project.DoesNotExist" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="exception">
+<dt id="promgen.models.Project.MultipleObjectsReturned">
+<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#promgen.models.Project.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
 
 <dl class="class">
 <dt id="promgen.models.Prometheus">
 <em class="property">class </em><code class="descclassname">promgen.models.</code><code class="descname">Prometheus</code><span class="sig-paren">(</span><em>id</em>, <em>shard</em>, <em>host</em>, <em>port</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/promgen/models.html#Prometheus"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#promgen.models.Prometheus" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="exception">
+<dt id="promgen.models.Prometheus.DoesNotExist">
+<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#promgen.models.Prometheus.DoesNotExist" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="exception">
+<dt id="promgen.models.Prometheus.MultipleObjectsReturned">
+<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#promgen.models.Prometheus.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
 
 <dl class="class">
 <dt id="promgen.models.Rule">
-<em class="property">class </em><code class="descclassname">promgen.models.</code><code class="descname">Rule</code><span class="sig-paren">(</span><em>id</em>, <em>name</em>, <em>clause</em>, <em>duration</em>, <em>service</em>, <em>enabled</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/promgen/models.html#Rule"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#promgen.models.Rule" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="method">
+<em class="property">class </em><code class="descclassname">promgen.models.</code><code class="descname">Rule</code><span class="sig-paren">(</span><em>id</em>, <em>name</em>, <em>clause</em>, <em>duration</em>, <em>enabled</em>, <em>parent</em>, <em>content_type</em>, <em>object_id</em>, <em>description</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/promgen/models.html#Rule"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#promgen.models.Rule" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="exception">
+<dt id="promgen.models.Rule.DoesNotExist">
+<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#promgen.models.Rule.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="exception">
+<dt id="promgen.models.Rule.MultipleObjectsReturned">
+<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#promgen.models.Rule.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
 <dt id="promgen.models.Rule.copy_to">
-<code class="descname">copy_to</code><span class="sig-paren">(</span><em>service</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/promgen/models.html#Rule.copy_to"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#promgen.models.Rule.copy_to" title="Permalink to this definition">¶</a></dt>
+<code class="descname">copy_to</code><span class="sig-paren">(</span><em>content_type</em>, <em>object_id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/promgen/models.html#Rule.copy_to"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#promgen.models.Rule.copy_to" title="Permalink to this definition">¶</a></dt>
 <dd><p>Make a copy under a new service</p>
-<p>It&#8217;s important that we set pk to None so a new object is created, but we
+<p>It’s important that we set pk to None so a new object is created, but we
 also need to ensure the new name is unique by appending some unique data
 to the end of the name</p>
 </dd></dl>
@@ -92,37 +163,133 @@ to the end of the name</p>
 <dl class="class">
 <dt id="promgen.models.RuleAnnotation">
 <em class="property">class </em><code class="descclassname">promgen.models.</code><code class="descname">RuleAnnotation</code><span class="sig-paren">(</span><em>id</em>, <em>name</em>, <em>value</em>, <em>rule</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/promgen/models.html#RuleAnnotation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#promgen.models.RuleAnnotation" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="exception">
+<dt id="promgen.models.RuleAnnotation.DoesNotExist">
+<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#promgen.models.RuleAnnotation.DoesNotExist" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="exception">
+<dt id="promgen.models.RuleAnnotation.MultipleObjectsReturned">
+<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#promgen.models.RuleAnnotation.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
 
 <dl class="class">
 <dt id="promgen.models.RuleLabel">
 <em class="property">class </em><code class="descclassname">promgen.models.</code><code class="descname">RuleLabel</code><span class="sig-paren">(</span><em>id</em>, <em>name</em>, <em>value</em>, <em>rule</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/promgen/models.html#RuleLabel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#promgen.models.RuleLabel" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="exception">
+<dt id="promgen.models.RuleLabel.DoesNotExist">
+<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#promgen.models.RuleLabel.DoesNotExist" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="exception">
+<dt id="promgen.models.RuleLabel.MultipleObjectsReturned">
+<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#promgen.models.RuleLabel.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
 
 <dl class="class">
 <dt id="promgen.models.Sender">
-<em class="property">class </em><code class="descclassname">promgen.models.</code><code class="descname">Sender</code><span class="sig-paren">(</span><em>id</em>, <em>sender</em>, <em>value</em>, <em>alias</em>, <em>content_type</em>, <em>object_id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/promgen/models.html#Sender"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#promgen.models.Sender" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">promgen.models.</code><code class="descname">Sender</code><span class="sig-paren">(</span><em>id</em>, <em>sender</em>, <em>value</em>, <em>alias</em>, <em>content_type</em>, <em>object_id</em>, <em>owner</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/promgen/models.html#Sender"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#promgen.models.Sender" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="exception">
+<dt id="promgen.models.Sender.DoesNotExist">
+<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#promgen.models.Sender.DoesNotExist" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="exception">
+<dt id="promgen.models.Sender.MultipleObjectsReturned">
+<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#promgen.models.Sender.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="promgen.models.Sender.driver">
+<code class="descname">driver</code><a class="headerlink" href="#promgen.models.Sender.driver" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return configured driver for Sender model instance</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="promgen.models.Sender.driver_set">
+<em class="property">classmethod </em><code class="descname">driver_set</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/promgen/models.html#Sender.driver_set"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#promgen.models.Sender.driver_set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the list of drivers for Sender model</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="promgen.models.Sender.test">
+<code class="descname">test</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/promgen/models.html#Sender.test"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#promgen.models.Sender.test" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test sender plugin</p>
+<p>Uses the same test json from our unittests but subs in the currently
+tested object as part of the test data</p>
+</dd></dl>
+
+</dd></dl>
 
 <dl class="class">
 <dt id="promgen.models.Service">
-<em class="property">class </em><code class="descclassname">promgen.models.</code><code class="descname">Service</code><span class="sig-paren">(</span><em>id</em>, <em>name</em>, <em>shard</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/promgen/models.html#Service"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#promgen.models.Service" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">promgen.models.</code><code class="descname">Service</code><span class="sig-paren">(</span><em>id</em>, <em>name</em>, <em>shard</em>, <em>description</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/promgen/models.html#Service"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#promgen.models.Service" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="exception">
+<dt id="promgen.models.Service.DoesNotExist">
+<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#promgen.models.Service.DoesNotExist" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="exception">
+<dt id="promgen.models.Service.MultipleObjectsReturned">
+<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#promgen.models.Service.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
 
 <dl class="class">
 <dt id="promgen.models.Shard">
-<em class="property">class </em><code class="descclassname">promgen.models.</code><code class="descname">Shard</code><span class="sig-paren">(</span><em>id</em>, <em>name</em>, <em>url</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/promgen/models.html#Shard"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#promgen.models.Shard" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">promgen.models.</code><code class="descname">Shard</code><span class="sig-paren">(</span><em>id</em>, <em>name</em>, <em>url</em>, <em>proxy</em>, <em>enabled</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/promgen/models.html#Shard"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#promgen.models.Shard" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="exception">
+<dt id="promgen.models.Shard.DoesNotExist">
+<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#promgen.models.Shard.DoesNotExist" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="exception">
+<dt id="promgen.models.Shard.MultipleObjectsReturned">
+<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#promgen.models.Shard.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="promgen.models.Site">
+<em class="property">class </em><code class="descclassname">promgen.models.</code><code class="descname">Site</code><span class="sig-paren">(</span><em>id</em>, <em>domain</em>, <em>name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/promgen/models.html#Site"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#promgen.models.Site" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="exception">
+<dt id="promgen.models.Site.DoesNotExist">
+<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#promgen.models.Site.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="exception">
+<dt id="promgen.models.Site.MultipleObjectsReturned">
+<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#promgen.models.Site.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
 
 <dl class="class">
 <dt id="promgen.models.URL">
 <em class="property">class </em><code class="descclassname">promgen.models.</code><code class="descname">URL</code><span class="sig-paren">(</span><em>id</em>, <em>url</em>, <em>project</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/promgen/models.html#URL"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#promgen.models.URL" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="exception">
+<dt id="promgen.models.URL.DoesNotExist">
+<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#promgen.models.URL.DoesNotExist" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="exception">
+<dt id="promgen.models.URL.MultipleObjectsReturned">
+<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#promgen.models.URL.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
 
 </div>
 
 
           </div>
+          
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -144,25 +311,24 @@ to the end of the name</p>
 
 
 <h3>Navigation</h3>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../terms.html">Glossary</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../docker.html">Running Promgen using Docker</a></li>
-</ul>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../plugin/discovery.html">Writing Discovery Plugins</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../plugin/notification.html">Writing Notification Plugins</a></li>
-</ul>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="discovery.html">Discovery Plugins</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Promgen Models</a></li>
-<li class="toctree-l1"><a class="reference internal" href="notification.html">Notification Modules</a></li>
-<li class="toctree-l1"><a class="reference internal" href="prometheus.html">Prometheus Interactions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../conf/index.html">Installing Promgen</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/index.html">Using Promgen</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../plugin/index.html">Extending Promgen</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Module Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="discovery.html">Discovery Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notification.html">Notification Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="prometheus.html">Prometheus Interactions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tags.html">Template Tags</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Promgen Models</a></li>
+</ul>
+</li>
 </ul>
 
 
 <ul>
-  <li><a href="genindex.html">Index</a></li>
-  <li><a href="py-modindex.html">Module Index</a></li>
+  <li><a href="../genindex.html">Index</a></li>
+  <li><a href="../py-modindex.html">Module Index</a></li>
 </ul>
 
 <hr />
@@ -175,19 +341,22 @@ to the end of the name</p>
 <h3>Related Topics</h3>
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="discovery.html" title="previous chapter">Discovery Plugins</a></li>
-      <li>Next: <a href="notification.html" title="next chapter">Notification Modules</a></li>
+  <li><a href="index.html">Module Reference</a><ul>
+      <li>Previous: <a href="tags.html" title="previous chapter">Template Tags</a></li>
+  </ul></li>
   </ul></li>
 </ul>
 </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -198,8 +367,8 @@ to the end of the name</p>
       &copy;2017, LINE.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.5</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
       
       |
       <a href="../_sources/modules/models.rst.txt"

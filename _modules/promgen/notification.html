@@ -1,26 +1,15 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>promgen.notification &#8212; Promgen 0.11.dev documentation</title>
-    
+    <title>promgen.notification &#8212; Promgen 0.28.dev documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../../',
-        VERSION:     '0.11.dev',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
@@ -32,13 +21,14 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
-  </head>
-  <body role="document">
+  </head><body>
   
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
+          
+
           <div class="body" role="main">
             
   <h1>Source code for promgen.notification</h1><div class="highlight"><pre>
@@ -50,15 +40,17 @@
 
 <span class="kn">from</span> <span class="nn">django</span> <span class="k">import</span> <span class="n">forms</span>
 <span class="kn">from</span> <span class="nn">django.conf</span> <span class="k">import</span> <span class="n">settings</span>
-
+<span class="kn">from</span> <span class="nn">django.template.loader</span> <span class="k">import</span> <span class="n">render_to_string</span>
+<span class="kn">from</span> <span class="nn">promgen</span> <span class="k">import</span> <span class="n">tasks</span>
 <span class="kn">from</span> <span class="nn">promgen.models</span> <span class="k">import</span> <span class="n">Project</span><span class="p">,</span> <span class="n">Service</span>
+<span class="kn">from</span> <span class="nn">promgen.shortcuts</span> <span class="k">import</span> <span class="n">resolve_domain</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 
-<span class="k">class</span> <span class="nc">FormSenderBase</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">Form</span><span class="p">):</span>
+<div class="viewcode-block" id="FormSenderBase"><a class="viewcode-back" href="../../modules/notification.html#promgen.notification.FormSenderBase">[docs]</a><span class="k">class</span> <span class="nc">FormSenderBase</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">Form</span><span class="p">):</span>
     <span class="n">value</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">alias</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">alias</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="NotificationBase"><a class="viewcode-back" href="../../modules/notification.html#promgen.notification.NotificationBase">[docs]</a><span class="k">class</span> <span class="nc">NotificationBase</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -72,22 +64,26 @@
 
     <span class="n">form</span> <span class="o">=</span> <span class="n">FormSenderBase</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="c1"># In case some of our sender plugins are not using celery,</span>
-        <span class="c1"># We store our calling function in self.__send so that send()</span>
-        <span class="c1"># and test() can call the correct function while leaving the</span>
-        <span class="c1"># original function alone in case it needs to be called directly</span>
-        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_send</span><span class="p">,</span> <span class="s1">&#39;delay&#39;</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__send</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_send</span><span class="o">.</span><span class="n">delay</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__send</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_send</span>
-
     <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">help</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__doc__</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">textwrap</span><span class="o">.</span><span class="n">dedent</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__doc__</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_send</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">alert</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+<div class="viewcode-block" id="NotificationBase.process"><a class="viewcode-back" href="../../modules/notification.html#promgen.notification.NotificationBase.process">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Process a notification</span>
+
+<span class="sd">        By default, this will just queue an item in celery to be processed but in some cases</span>
+<span class="sd">        a notifier may want to immediately process it or otherwise send a message, so we</span>
+<span class="sd">        provide this entry hook</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;args&#39;</span><span class="p">:</span> <span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__module__</span><span class="p">,</span> <span class="n">data</span><span class="p">)}</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="s1">&#39;queue&#39;</span><span class="p">):</span>
+            <span class="n">params</span><span class="p">[</span><span class="s1">&#39;queue&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="s1">&#39;queue&#39;</span><span class="p">)</span>
+        <span class="n">tasks</span><span class="o">.</span><span class="n">send_notification</span><span class="o">.</span><span class="n">apply_async</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_send</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">alert</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Sender specific implmentation</span>
 
@@ -110,6 +106,34 @@
         <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Undefined setting. Please check for </span><span class="si">%s</span><span class="s1"> under </span><span class="si">%s</span><span class="s1"> in settings.yml&#39;</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__module__</span><span class="p">)</span></div>
 
+<div class="viewcode-block" id="NotificationBase.expand"><a class="viewcode-back" href="../../modules/notification.html#promgen.notification.NotificationBase.expand">[docs]</a>    <span class="k">def</span> <span class="nf">expand</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Look through our alert and expand any objects we find</span>
+
+<span class="sd">        This is responsible for looking through our alerts and finding any</span>
+<span class="sd">        supported labels (like Projects and Services) that we can expand into</span>
+<span class="sd">        an annotation</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="n">data</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;commonLabels&#39;</span><span class="p">,</span> <span class="p">{})</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;commonAnnotations&#39;</span><span class="p">,</span> <span class="p">{})</span>
+
+        <span class="c1"># Look through our labels and find the object from Promgen&#39;s DB</span>
+        <span class="c1"># If we find an object in Promgen, add an annotation with a direct link</span>
+        <span class="k">for</span> <span class="n">label</span><span class="p">,</span> <span class="n">klass</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">MAPPING</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">label</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;commonLabels&#39;</span><span class="p">]:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Missing label </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span>
+                <span class="k">continue</span>
+
+            <span class="c1"># Should only find a single value, but I think filter is a little</span>
+            <span class="c1"># bit more forgiving than get in terms of throwing errors</span>
+            <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">klass</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;commonLabels&#39;</span><span class="p">][</span><span class="n">label</span><span class="p">]):</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Found </span><span class="si">%s</span><span class="s1"> </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">obj</span><span class="p">)</span>
+                <span class="n">output</span><span class="p">[</span><span class="n">label</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span>
+                <span class="n">data</span><span class="p">[</span><span class="s1">&#39;commonAnnotations&#39;</span><span class="p">][</span><span class="n">label</span><span class="p">]</span> <span class="o">=</span> <span class="n">resolve_domain</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">output</span></div>
+
 <div class="viewcode-block" id="NotificationBase.send"><a class="viewcode-back" href="../../modules/notification.html#promgen.notification.NotificationBase.send">[docs]</a>    <span class="k">def</span> <span class="nf">send</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Send out an alert</span>
@@ -121,23 +145,21 @@
 <span class="sd">        See tests/examples/alertmanager.json for an example payload</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">sent</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="n">alerts</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;alerts&#39;</span><span class="p">,</span> <span class="p">[])</span>
-        <span class="k">for</span> <span class="n">alert</span> <span class="ow">in</span> <span class="n">alerts</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">label</span><span class="p">,</span> <span class="n">klass</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">MAPPING</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">label</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">alert</span><span class="p">[</span><span class="s1">&#39;labels&#39;</span><span class="p">]:</span>
-                    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Missing label </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span>
-                    <span class="k">continue</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Checking senders for </span><span class="si">%s</span><span class="s1">=</span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">alert</span><span class="p">[</span><span class="s1">&#39;labels&#39;</span><span class="p">][</span><span class="n">label</span><span class="p">])</span>
-                <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">klass</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">alert</span><span class="p">[</span><span class="s1">&#39;labels&#39;</span><span class="p">][</span><span class="n">label</span><span class="p">]):</span>
-                    <span class="k">for</span> <span class="n">sender</span> <span class="ow">in</span> <span class="n">obj</span><span class="o">.</span><span class="n">sender</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">sender</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="vm">__module__</span><span class="p">):</span>
-                        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Sending to </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">sender</span><span class="p">)</span>
-                        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__send</span><span class="p">(</span><span class="n">sender</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">alert</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
-                            <span class="n">sent</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">label</span><span class="p">,</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">output</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">sender</span> <span class="ow">in</span> <span class="n">obj</span><span class="o">.</span><span class="n">notifiers</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">sender</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="vm">__module__</span><span class="p">):</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_send</span><span class="p">(</span><span class="n">sender</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+                <span class="k">except</span><span class="p">:</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s1">&#39;Error sending notification&#39;</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">sent</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="k">if</span> <span class="n">sent</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;No senders configured for project or service&#39;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">sent</span></div>
 
-<div class="viewcode-block" id="NotificationBase.test"><a class="viewcode-back" href="../../modules/notification.html#promgen.notification.NotificationBase.test">[docs]</a>    <span class="k">def</span> <span class="nf">test</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">alert</span><span class="p">):</span>
+<div class="viewcode-block" id="NotificationBase.test"><a class="viewcode-back" href="../../modules/notification.html#promgen.notification.NotificationBase.test">[docs]</a>    <span class="k">def</span> <span class="nf">test</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Send out test notification</span>
 
@@ -145,10 +167,19 @@
 <span class="sd">        parameters for our sender child classes</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Sending test message to </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__send</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">alert</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;externalURL&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">})</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_send</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">template</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">render_to_string</span><span class="p">(</span><span class="n">template</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="c1"># Uncomment to re-generate test templates</span>
+        <span class="c1"># with open(template.replace(&#39;sender&#39;, &#39;tests/notifications&#39;), &#39;w+&#39;) as fp:</span>
+        <span class="c1">#     fp.write(s)</span>
+        <span class="k">return</span> <span class="n">s</span></div>
 </pre></div>
 
           </div>
+          
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -171,24 +202,16 @@
 
 <h3>Navigation</h3>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../terms.html">Glossary</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../docker.html">Running Promgen using Docker</a></li>
-</ul>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../plugin/discovery.html">Writing Discovery Plugins</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../plugin/notification.html">Writing Notification Plugins</a></li>
-</ul>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../modules/discovery.html">Discovery Plugins</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../modules/models.html">Promgen Models</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../modules/notification.html">Notification Modules</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../modules/prometheus.html">Prometheus Interactions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../conf/index.html">Installing Promgen</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user/index.html">Using Promgen</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../plugin/index.html">Extending Promgen</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/index.html">Module Reference</a></li>
 </ul>
 
 
 <ul>
-  <li><a href="genindex.html">Index</a></li>
-  <li><a href="py-modindex.html">Module Index</a></li>
+  <li><a href="../../genindex.html">Index</a></li>
+  <li><a href="../../py-modindex.html">Module Index</a></li>
 </ul>
 
 <hr />
@@ -208,12 +231,14 @@
 </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -224,8 +249,8 @@
       &copy;2017, LINE.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.5</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
       
     </div>
 

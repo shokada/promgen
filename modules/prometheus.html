@@ -1,31 +1,21 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Prometheus Interactions &#8212; Promgen 0.11.dev documentation</title>
-    
+    <title>Prometheus Interactions &#8212; Promgen 0.28.dev documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '0.11.dev',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Template Tags" href="tags.html" />
     <link rel="prev" title="Notification Modules" href="notification.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
@@ -33,13 +23,14 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
-  </head>
-  <body role="document">
+  </head><body>
   
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
+          
+
           <div class="body" role="main">
             
   <div class="section" id="module-promgen.prometheus">
@@ -47,30 +38,36 @@
 <dl class="function">
 <dt id="promgen.prometheus.check_rules">
 <code class="descclassname">promgen.prometheus.</code><code class="descname">check_rules</code><span class="sig-paren">(</span><em>rules</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/promgen/prometheus.html#check_rules"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#promgen.prometheus.check_rules" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Use promtool to check to see if a rule is valid or not</p>
+<p>The command name changed slightly from 1.x -&gt; 2.x but this uses promtool
+to verify if the rules are correct or not. This can be bypassed by setting
+a dummy command such as /usr/bin/true that always returns true</p>
+</dd></dl>
 
 <dl class="function">
 <dt id="promgen.prometheus.import_config">
-<code class="descclassname">promgen.prometheus.</code><code class="descname">import_config</code><span class="sig-paren">(</span><em>config</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/promgen/prometheus.html#import_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#promgen.prometheus.import_config" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">promgen.prometheus.</code><code class="descname">import_config</code><span class="sig-paren">(</span><em>config</em>, <em>replace_shard=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/promgen/prometheus.html#import_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#promgen.prometheus.import_config" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="promgen.prometheus.import_rules">
-<code class="descclassname">promgen.prometheus.</code><code class="descname">import_rules</code><span class="sig-paren">(</span><em>config</em>, <em>default_service=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/promgen/prometheus.html#import_rules"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#promgen.prometheus.import_rules" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">promgen.prometheus.</code><code class="descname">import_rules</code><span class="sig-paren">(</span><em>config</em>, <em>content_object=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/promgen/prometheus.html#import_rules"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#promgen.prometheus.import_rules" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
-<dt id="promgen.prometheus.mute">
-<code class="descclassname">promgen.prometheus.</code><code class="descname">mute</code><span class="sig-paren">(</span><em>duration</em>, <em>labels</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/promgen/prometheus.html#mute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#promgen.prometheus.mute" title="Permalink to this definition">¶</a></dt>
-<dd><p>Post a silence message to Alert Manager
-Duration should be sent in a format like 1m 2h 1d etc</p>
+<dt id="promgen.prometheus.import_rules_v1">
+<code class="descclassname">promgen.prometheus.</code><code class="descname">import_rules_v1</code><span class="sig-paren">(</span><em>config</em>, <em>content_object=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/promgen/prometheus.html#import_rules_v1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#promgen.prometheus.import_rules_v1" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse text and extract Prometheus rules</p>
+<p>This assumes text in the 1.x rule format.
+See promgen/tests/examples/import.rule for an example</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="promgen.prometheus.mute_fromto">
-<code class="descclassname">promgen.prometheus.</code><code class="descname">mute_fromto</code><span class="sig-paren">(</span><em>start</em>, <em>stop</em>, <em>labels</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/promgen/prometheus.html#mute_fromto"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#promgen.prometheus.mute_fromto" title="Permalink to this definition">¶</a></dt>
-<dd><p>Post a silence message to Alert Manager
-Duration should be sent in a format like 2017-01-01 09:00</p>
+<dt id="promgen.prometheus.import_rules_v2">
+<code class="descclassname">promgen.prometheus.</code><code class="descname">import_rules_v2</code><span class="sig-paren">(</span><em>config</em>, <em>content_object=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/promgen/prometheus.html#import_rules_v2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#promgen.prometheus.import_rules_v2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loop through a dictionary and add rules to the database</p>
+<p>This assumes a dictonary in the 2.x rule format.
+See promgen/tests/examples/import.rule.yml for an example</p>
 </dd></dl>
 
 <dl class="function">
@@ -80,18 +77,48 @@ Duration should be sent in a format like 2017-01-01 09:00</p>
 
 <dl class="function">
 <dt id="promgen.prometheus.render_rules">
-<code class="descclassname">promgen.prometheus.</code><code class="descname">render_rules</code><span class="sig-paren">(</span><em>rules=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/promgen/prometheus.html#render_rules"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#promgen.prometheus.render_rules" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="descclassname">promgen.prometheus.</code><code class="descname">render_rules</code><span class="sig-paren">(</span><em>rules=None</em>, <em>version=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/promgen/prometheus.html#render_rules"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#promgen.prometheus.render_rules" title="Permalink to this definition">¶</a></dt>
+<dd><p>Render rules in a format that Prometheus understands</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>rules</strong> (<em>list</em><em>(</em><a class="reference internal" href="models.html#promgen.models.Rule" title="promgen.models.Rule"><em>Rule</em></a><em>)</em>) – List of rules</li>
+<li><strong>version</strong> (<em>int</em>) – Prometheus rule format (1 or 2)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Returns rules in yaml or Prometheus v1 format</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bytes</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>This function can render in either v1 or v2 format
+We call prefetch_related_objects within this function to populate the
+other related objects that are mostly used for the sub lookups.</p>
+</dd></dl>
 
 <dl class="function">
 <dt id="promgen.prometheus.render_urls">
 <code class="descclassname">promgen.prometheus.</code><code class="descname">render_urls</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/promgen/prometheus.html#render_urls"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#promgen.prometheus.render_urls" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
+<dl class="function">
+<dt id="promgen.prometheus.silence">
+<code class="descclassname">promgen.prometheus.</code><code class="descname">silence</code><span class="sig-paren">(</span><em>labels</em>, <em>duration=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/promgen/prometheus.html#silence"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#promgen.prometheus.silence" title="Permalink to this definition">¶</a></dt>
+<dd><p>Post a silence message to Alert Manager
+Duration should be sent in a format like 1m 2h 1d etc</p>
+</dd></dl>
+
 </div>
 
 
           </div>
+          
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -113,25 +140,24 @@ Duration should be sent in a format like 2017-01-01 09:00</p>
 
 
 <h3>Navigation</h3>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../terms.html">Glossary</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../docker.html">Running Promgen using Docker</a></li>
-</ul>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../plugin/discovery.html">Writing Discovery Plugins</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../plugin/notification.html">Writing Notification Plugins</a></li>
-</ul>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="discovery.html">Discovery Plugins</a></li>
-<li class="toctree-l1"><a class="reference internal" href="models.html">Promgen Models</a></li>
-<li class="toctree-l1"><a class="reference internal" href="notification.html">Notification Modules</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Prometheus Interactions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../conf/index.html">Installing Promgen</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/index.html">Using Promgen</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../plugin/index.html">Extending Promgen</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Module Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="discovery.html">Discovery Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notification.html">Notification Modules</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Prometheus Interactions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tags.html">Template Tags</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models.html">Promgen Models</a></li>
+</ul>
+</li>
 </ul>
 
 
 <ul>
-  <li><a href="genindex.html">Index</a></li>
-  <li><a href="py-modindex.html">Module Index</a></li>
+  <li><a href="../genindex.html">Index</a></li>
+  <li><a href="../py-modindex.html">Module Index</a></li>
 </ul>
 
 <hr />
@@ -144,18 +170,23 @@ Duration should be sent in a format like 2017-01-01 09:00</p>
 <h3>Related Topics</h3>
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Module Reference</a><ul>
       <li>Previous: <a href="notification.html" title="previous chapter">Notification Modules</a></li>
+      <li>Next: <a href="tags.html" title="next chapter">Template Tags</a></li>
+  </ul></li>
   </ul></li>
 </ul>
 </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -166,8 +197,8 @@ Duration should be sent in a format like 2017-01-01 09:00</p>
       &copy;2017, LINE.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.5</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
       
       |
       <a href="../_sources/modules/prometheus.rst.txt"

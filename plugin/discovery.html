@@ -1,54 +1,44 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Writing Discovery Plugins &#8212; Promgen 0.11.dev documentation</title>
-    
+    <title>Discovery Plugins &#8212; Promgen 0.28.dev documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '0.11.dev',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Writing Notification Plugins" href="notification.html" />
-    <link rel="prev" title="Running Promgen using Docker" href="../docker.html" />
+    <link rel="next" title="Notification Plugins" href="notification.html" />
+    <link rel="prev" title="Authentication Plugins" href="auth.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
-  </head>
-  <body role="document">
+  </head><body>
   
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
+          
+
           <div class="body" role="main">
             
-  <div class="section" id="writing-discovery-plugins">
-<h1>Writing Discovery Plugins<a class="headerlink" href="#writing-discovery-plugins" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="discovery-plugins">
+<h1>Discovery Plugins<a class="headerlink" href="#discovery-plugins" title="Permalink to this headline">¶</a></h1>
 <p>Promgen uses discovery plugins to bridge non-natively supported discovery
-mechanisms to Prometheus&#8217;s file configuration format. They should be registered
+mechanisms to Prometheus’s file configuration format. They should be registered
 using setuptools <a class="reference external" href="http://setuptools.readthedocs.io/en/latest/setuptools.html#automatic-script-creation">entry_points</a>.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">entry_points</span><span class="o">=</span><span class="p">{</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">entry_points</span><span class="o">=</span><span class="p">{</span>
     <span class="s1">&#39;promgen.discovery&#39;</span><span class="p">:</span> <span class="p">[</span>
         <span class="s1">&#39;example = module.path.discovery:DiscoveryExample&#39;</span><span class="p">,</span>
     <span class="p">],</span>
@@ -57,7 +47,7 @@ using setuptools <a class="reference external" href="http://setuptools.readthedo
 </div>
 <p>Plugins should inherit from DiscoveryBase, should implement <em>farms()</em> and
 <em>fetch()</em> methods</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">promgen.discovery</span> <span class="kn">import</span> <span class="n">DiscoveryBase</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">promgen.discovery</span> <span class="kn">import</span> <span class="n">DiscoveryBase</span>
 
 <span class="n">EXAMPLE</span> <span class="o">=</span> <span class="p">{</span>
   <span class="s1">&#39;Farm-A&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;AA&#39;</span><span class="p">,</span> <span class="s1">&#39;AB&#39;</span><span class="p">,</span> <span class="s1">&#39;AC&#39;</span><span class="p">]</span>
@@ -76,6 +66,7 @@ using setuptools <a class="reference external" href="http://setuptools.readthedo
 
 
           </div>
+          
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -97,25 +88,22 @@ using setuptools <a class="reference external" href="http://setuptools.readthedo
 
 
 <h3>Navigation</h3>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../terms.html">Glossary</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../docker.html">Running Promgen using Docker</a></li>
-</ul>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Writing Discovery Plugins</a></li>
-<li class="toctree-l1"><a class="reference internal" href="notification.html">Writing Notification Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../conf/index.html">Installing Promgen</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/index.html">Using Promgen</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Extending Promgen</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="auth.html">Authentication Plugins</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Discovery Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notification.html">Notification Plugins</a></li>
 </ul>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../modules/discovery.html">Discovery Plugins</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../modules/models.html">Promgen Models</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../modules/notification.html">Notification Modules</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../modules/prometheus.html">Prometheus Interactions</a></li>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../modules/index.html">Module Reference</a></li>
 </ul>
 
 
 <ul>
-  <li><a href="genindex.html">Index</a></li>
-  <li><a href="py-modindex.html">Module Index</a></li>
+  <li><a href="../genindex.html">Index</a></li>
+  <li><a href="../py-modindex.html">Module Index</a></li>
 </ul>
 
 <hr />
@@ -128,19 +116,23 @@ using setuptools <a class="reference external" href="http://setuptools.readthedo
 <h3>Related Topics</h3>
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="../docker.html" title="previous chapter">Running Promgen using Docker</a></li>
-      <li>Next: <a href="notification.html" title="next chapter">Writing Notification Plugins</a></li>
+  <li><a href="index.html">Extending Promgen</a><ul>
+      <li>Previous: <a href="auth.html" title="previous chapter">Authentication Plugins</a></li>
+      <li>Next: <a href="notification.html" title="next chapter">Notification Plugins</a></li>
+  </ul></li>
   </ul></li>
 </ul>
 </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -151,8 +143,8 @@ using setuptools <a class="reference external" href="http://setuptools.readthedo
       &copy;2017, LINE.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.5</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
       
       |
       <a href="../_sources/plugin/discovery.rst.txt"
