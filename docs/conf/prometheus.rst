@@ -8,7 +8,7 @@ There are multiple ways to deploy these targets to a Prometheus server.
 Worker Model (Push)
 -------------------
 
-.. image:: /images/worker.png
+.. image:: ../images/worker.png
 
 Promgen's Push mode relies on `celery <http://docs.celeryproject.org>`__ to push updates to Prometheus.
 A Promgen worker is run on each Prometheus server which subscribes to a named queue to signal when to write
